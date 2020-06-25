@@ -1,14 +1,14 @@
 "use strict"
 
-import React from 'react';
-
+import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity, ScrollView, TouchableWithoutFeedback } from 'react-native';
 
+// Colors
 import Colors from '../../shared/styles/colors'
+
+// Libs
 import Modal from 'react-native-modal';
 import { Icon } from 'react-native-elements'
-
-import axios from 'axios';
 
 // Components
 import ListProduct from './components/ListProduct'
@@ -17,9 +17,11 @@ import ListProduct from './components/ListProduct'
 import { useCarrinho } from '../../Context/CarrinhoData'
 
 
-const Carrinho = ({visible, onPress}) => {
+const Carrinho = ({visible, onPress, parentCb}) => {
 
     const { cestaData, setCestaData } = useCarrinho();
+    const [ bttEnable, setBttEnable ] = useState(true);
+    const [ carrinhoVis, setCarrinhoVis ] = useState(visible);
 
     let carrinhoVazio;
 
@@ -31,19 +33,22 @@ const Carrinho = ({visible, onPress}) => {
     }
 
     const postCarrinho = async () => {
-        await axios.post('http://192.168.0.109:2333/cestas/pedido', {cestaData})
+        parentCb(true) 
+        setCarrinhoVis(!carrinhoVis)
+        setBttEnable(false)
 
-        .then(res => {
-            console.log(res);
-        })
-        .catch(err => {
-            console.log(err);
-        })
     }
+
+    useEffect(() => {
+
+        setCarrinhoVis(visible)
+        
+      }, [visible])
+
 
     return(
         <View style={styles.Container}>
-            <Modal style={styles.modalView}  animationIn={'slideInRight'} animationOut={'slideOutRight'} isVisible={visible} customBackdrop={<TouchableWithoutFeedback onPress={onPress}><View style={{flex: 1, backgroundColor: 'black', opacity: 0.90}} /></TouchableWithoutFeedback>} backdropOpacity={0.20}>
+            <Modal style={styles.modalView}  animationIn={'slideInRight'} animationOut={'slideOutRight'} isVisible={carrinhoVis} customBackdrop={<TouchableWithoutFeedback onPress={onPress}><View style={{flex: 1, backgroundColor: 'black', opacity: 0.90}} /></TouchableWithoutFeedback>} backdropOpacity={0.20}>
                 <View style={styles.carrinhoContainer}>
                    <View style={styles.topBar}>
                        
@@ -55,6 +60,7 @@ const Carrinho = ({visible, onPress}) => {
                    <View style={styles.products}>
                    
                        <ScrollView>
+                       
 
                         {carrinhoVazio && <Text style={{alignSelf: 'center', marginTop: 30, color: '#8f8f92', fontSize:16, fontFamily: 'sans-serif-light'}}>Nenhuma cesta no carrinho </Text>}
 
@@ -62,16 +68,17 @@ const Carrinho = ({visible, onPress}) => {
                                 <ListProduct  key={c.id} nome={c.nome} preco={c.preco} img={c.img} qtd={c.qtd} onPress={(id) => deleteFromCarrinho(c.id)}/>
                             )}
 
-                       </ScrollView>
 
+                       </ScrollView>
                    </View>
+                   
 
                    <View style={styles.bottomBar}>
                         <View style={styles.total}>
                             <Text style={styles.subtotalText}>Subtotal : </Text>
                             <Text style={styles.totalText}>R${cestaData.reduce((sum, i) => (sum += i.preco), 0)}</Text>
                         </View>
-                        <TouchableOpacity style={styles.finalizarBtt}>
+                        <TouchableOpacity disabled={bttEnable} style={styles.finalizarBtt}>
                             <Text style={{color: 'white', textAlign: 'center'}} onPress={postCarrinho}>FINALIZAR PEDIDO</Text>
                         </TouchableOpacity>
                     

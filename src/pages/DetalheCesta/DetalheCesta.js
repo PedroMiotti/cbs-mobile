@@ -1,12 +1,17 @@
-import React, {useState, useContext} from 'react';
+"use strict"
 
+import React, {useState, useContext} from 'react';
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Button, Image } from 'react-native';
 
-import AddButton from '../../shared/components/AddButton'
+// Colors
 import Colors from '../../shared/styles/colors'
 
 // Context
 import { useCarrinho } from '../../Context/CarrinhoData'
+
+//Components
+import Snackbar from '../../shared/components/Snackbar'
+import AddButton from '../../shared/components/AddButton'
 
 
 const DetalheCesta = ({route, navigation}) => {
@@ -15,6 +20,7 @@ const DetalheCesta = ({route, navigation}) => {
     const { cestaData, setCestaData } = useCarrinho();
 
     const [qtd, setQtd] = useState(1);
+    const [ snackbarVis, setSnackbarVis ] = useState(false);
 
     // Pegando info da cesta selecionanda 
     const { id } = route.params;
@@ -23,13 +29,19 @@ const DetalheCesta = ({route, navigation}) => {
     const { preco } = route.params;
     const { img } = route.params;
 
+    
+
     // Pegando a qtd do componente AddButton
     const callbackQtd = (data) => {
         setQtd(data)
     }
 
+    const _onDismissSnackBar = () => setSnackbarVis(!snackbarVis)
+
     // Setando as info para o carrinho
     const carrinhoData = () => {
+
+        setSnackbarVis(true)
         
         let newElement = {
             id : id, 
@@ -38,9 +50,6 @@ const DetalheCesta = ({route, navigation}) => {
             qtd: qtd,
             img: img
         }
-
-  
-        // setCestaData([...cestaData, newElement])
             
        if(Object.keys(cestaData).length === 0) {
             setCestaData([...cestaData, newElement])
@@ -100,12 +109,16 @@ const DetalheCesta = ({route, navigation}) => {
                         </View>
 
                     </View>
+
+                    
                     
                 </View>
 
                 <View style={styles.composicao}>
                     
                 </View>
+
+                {snackbarVis && <Snackbar visible={snackbarVis} msg='Cesta adicionada ao carrinho' onDismiss={_onDismissSnackBar}></Snackbar>}
 
         </View>
     );

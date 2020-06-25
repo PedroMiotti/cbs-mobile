@@ -10,15 +10,17 @@ export default async function getCestas(){
         .then(res => {
 
             data = res.data;
+            
 
         })
         .catch(err => {
     
             data = err;
+            
 
         })
 
-    return data;
+    return ( data || []);
       
 }
 

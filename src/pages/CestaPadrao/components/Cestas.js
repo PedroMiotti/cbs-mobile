@@ -21,10 +21,11 @@ const Cestas = ({img, name, price, onPress}) => {
 }
 
 const { width } = Dimensions.get('window')
+
  
 const styles = StyleSheet.create({
     buttonContainer:{
-        width: (width - 45) / 5,
+        width: (width - 45) / 4,
         alignItems: "center",
         margin: 20,
         padding: 15,

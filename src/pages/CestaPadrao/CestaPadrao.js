@@ -11,29 +11,31 @@ import getCesta from '../../api/getCesta';
 // Components
 import Cestas from './components/Cestas'
 
+
 const CestaPadrao = ({navigation}) => {
 
   const [ cesta, setCesta ] = useState([]);
-  const [ error, setError ] = useState(false)
+  
 
+  
 
   useEffect(() => {
 
     let mounted = true;
 
     if(mounted){
-      let cestasData = getCesta();
-      console.log(cestasData())
-      setCesta(cestasData)
+      
+      getCesta().then(data => {
+
+        setCesta(data)
+        
+      });
       
     }
 
     return () => mounted = false;
     
-  })
-
-
-  // (typeof cesta === undefined ? setError(!error) : setError(false))
+  }, [])
 
 
 
@@ -46,8 +48,8 @@ const CestaPadrao = ({navigation}) => {
 
         <View style={styles.cestasContainer}>
             
-              {cesta.map(cesta => 
-                <Cestas key={cesta.cesta_id} img={'https://cbscestas.com.br/wp-content/uploads/2013/06/caixa-1-1.jpg'} name={cesta.cesta_nome} price={cesta.cesta_preco} onPress={() => (navigation.navigate('DetalheCesta', {
+              {!cesta ? <Text>Nenhuma cesta cadastrada</Text> : cesta.map(cesta => 
+                <Cestas key={cesta.cesta_id} img={'https://cbscestas.com.br/wp-content/uploads/2013/06/caixa-1-1.jpg'} name={cesta.cesta_nome} price={cesta.cesta_preco} onPress={() => ( navigation.navigate('DetalheCesta', {
                         id: cesta.cesta_id,
                         nomeCesta: cesta.cesta_nome,
                         qtdItens: 30,
@@ -55,6 +57,8 @@ const CestaPadrao = ({navigation}) => {
                         img: 'https://cbscestas.com.br/wp-content/uploads/2013/06/caixa-1-1.jpg'
                       }))}/>
               )}
+
+              
     
         </View>
       

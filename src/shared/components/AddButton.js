@@ -1,10 +1,13 @@
-import React, {useState} from 'react';
+"use strict"
 
+import React, {useState} from 'react';
 import {StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+
+// Colors
 import Colors from '../styles/colors'
 
+// Libs
 import { Icon } from 'react-native-elements'
-
 
 
 const AddButton = ({parentCb}) => {

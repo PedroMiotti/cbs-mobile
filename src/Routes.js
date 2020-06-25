@@ -1,9 +1,12 @@
-// Imports
-import 'react-native-gesture-handler';
-import React from 'react';
+"use strict"
 
+import 'react-native-gesture-handler';
+import React, {useState} from 'react';
+
+// Nav
 import { createStackNavigator } from '@react-navigation/stack';
 
+// Context API
 import CestaProvider from './Context/CarrinhoData'
 
 // Views
@@ -13,16 +16,17 @@ import CestaPadrao from './pages/CestaPadrao/CestaPadrao';
 import DetalheCesta from './pages/DetalheCesta/DetalheCesta';
 import Carrinho from './pages/Carrinho/Carrinho'
 
+// Components
 import Header from './shared/components/Header'
+
 
 const Stack = createStackNavigator();
 
 const Routes = () => {
 
-    
     return( 
         <CestaProvider>
-            <Stack.Navigator initialRouteName='Main' screenOptions={{headerStyle:{backgroundColor: '#00A650'}, headerTintColor: "#fff" , gestureEnabled: true, headerRightContainerStyle:{padding:15}, headerRight: () => ( <Header /> )}}>
+            <Stack.Navigator initialRouteName='Main' screenOptions={{headerStyle:{backgroundColor: '#00A650'}, headerTintColor: "#fff" , gestureEnabled: true, headerRightContainerStyle:{padding:15}, headerRight: () => ( <Header/> )}}>
                 <Stack.Screen name="Main" component={Main} options={{title:""}}/>
                 <Stack.Screen name="MontarCesta" component={MontarCesta} options={{title:"Monte sua cesta"}}/>
                 <Stack.Screen name="CestaPadrao" component={CestaPadrao} options={{title:"Cestas Padrao"}} />
