@@ -32,11 +32,10 @@ const Carrinho = ({visible, onPress, parentCb}) => {
         setCestaData(novoCarrinho)
     }
 
-    const postCarrinho = async () => {
+    const postCarrinho = () => {
         parentCb(true) 
         setCarrinhoVis(!carrinhoVis)
         setBttEnable(false)
-
     }
 
     useEffect(() => {

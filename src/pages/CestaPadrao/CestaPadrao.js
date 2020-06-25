@@ -1,8 +1,9 @@
 "use strict"
 
 import React, { useState, useEffect } from 'react';
-
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
+
+// Colors
 import Colors from '../../shared/styles/colors'
 
 // API
@@ -16,9 +17,6 @@ const CestaPadrao = ({navigation}) => {
 
   const [ cesta, setCesta ] = useState([]);
   
-
-  
-
   useEffect(() => {
 
     let mounted = true;
@@ -43,7 +41,7 @@ const CestaPadrao = ({navigation}) => {
     <ScrollView style={styles.container}>
       
         <View style={styles.filterContainer}>
-          <Text>filterContainer</Text>
+          <Text>Secao do Filtro</Text>
         </View>
 
         <View style={styles.cestasContainer}>

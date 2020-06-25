@@ -5,15 +5,38 @@ import { StyleSheet, View, TouchableWithoutFeedback, Text, Dimensions, Touchable
 
 // Libs
 import Modal from 'react-native-modal';
-import { Icon } from 'react-native-elements'
+import { Icon } from 'react-native-elements';
 import { TextInput } from 'react-native-paper';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 // Colors
-import Colors from '../../shared/styles/colors'
+import Colors from '../../shared/styles/colors';
+
+// Context
+import { useCarrinho } from '../../Context/CarrinhoData'
+
+// API
+import postPedido from '../../api/postPedido';
 
 
 const ModalCliente = ({visible, onPress}) => {
+
+    const [ pedidoPosted, setPedidoPosted ] = useState(false)
+    //Input
+    const [ nome, setNome ] = useState('');
+    const [ obs, setObs ] = useState('');
+    // Context
+    const { cestaData, setCestaData } = useCarrinho();
+
+    const post = () => {
+
+        let cliente = {nome_cliente: nome, observacao: obs}
+
+        postPedido(cestaData, cliente).then( setPedidoPosted(true) );
+
+        setCestaData([]);
+        setNome('');
+        setObs('');
+    }
 
     return(
         <View style={styles.Container}>
@@ -33,6 +56,8 @@ const ModalCliente = ({visible, onPress}) => {
                                         Type='outlined'
                                         underlineColor={Colors.primaryGreen}
                                         style={styles.inputName}
+                                        value={nome}
+                                        onChangeText={text => setNome(text)}
                                         
                                 />
                                 <TextInput
@@ -41,14 +66,14 @@ const ModalCliente = ({visible, onPress}) => {
                                     multiline={true}
                                     numberOfLines={3}
                                     underlineColor={Colors.primaryGreen}
-
-                                
+                                    value={obs}
+                                    onChangeText={text => setObs(text)}
                                 />
                             </View>
 
                             <View style={styles.buttonContainer}>
 
-                                <TouchableOpacity style={styles.buttonFin}>
+                                <TouchableOpacity style={styles.buttonFin} onPress={post}>
                                     <Text style={styles.buttonText}>Finalizar pedido</Text>
                                 </TouchableOpacity>
 
