@@ -11,6 +11,7 @@ export default async function postPedido(cestas, cliente){
         })
 
         .catch(err => {
+            console.log(err);
             throw new error(err)
         })
 
