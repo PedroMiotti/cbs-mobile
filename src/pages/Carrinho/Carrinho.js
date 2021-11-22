@@ -78,7 +78,7 @@ const Carrinho = ({visible, onPress, parentCb}) => {
                             <Text style={styles.totalText}>R${cestaData.reduce((sum, i) => (sum += i.preco), 0)}</Text>
                         </View>
                         <TouchableOpacity disabled={bttEnable} style={styles.finalizarBtt}>
-                            <Text style={{color: 'white', textAlign: 'center'}} onPress={postCarrinho}>FINALIZAR PEDIDO</Text>
+                            <Text style={{color: 'white', textAlign: 'center'}} onPress={postCarrinho}>Finalizar Pedido</Text>
                         </TouchableOpacity>
                     
                    </View>
