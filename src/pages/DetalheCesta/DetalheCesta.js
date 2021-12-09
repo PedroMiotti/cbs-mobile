@@ -124,6 +124,7 @@ const DetalheCesta = ({route, navigation}) => {
     );
 }
 
+const bottomPadding = 10;
 
 const styles = StyleSheet.create({
     detalhes:{
@@ -149,20 +150,20 @@ const styles = StyleSheet.create({
     nomeText: {
         fontSize: 30,
         fontFamily: 'sans-serif-light',
-        paddingBottom: 10
+        paddingBottom: bottomPadding
     },  
 
     qtdText: {
         fontSize: 20,
         fontFamily: 'sans-serif-light',
-        paddingBottom: 10,
+        paddingBottom: bottomPadding,
         color: '#8f8f92',
     },
 
     precoText: {
         fontSize: 27,
         fontFamily: 'sans-serif',
-        paddingBottom: 10,
+        paddingBottom: bottomPadding,
     },
 
     bttContainer: {
